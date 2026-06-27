@@ -1,0 +1,686 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Space+Mono:wght@400;700&family=Work+Sans:wght@400;500;600&display=swap');
+
+:root{
+  --paper:#F2E9D8;
+  --card:#FBF7EC;
+  --ink:#2B2620;
+  --ink-soft:#6b6152;
+  --yellow:#F4C430;
+  --green:#3F7D52;
+  --red:#C1422E;
+  --line:#d8cbab;
+}
+
+*{box-sizing:border-box;}
+body,div,section,header,form,fieldset{margin:0;padding:0;}
+
+.wrap{
+  font-family:'Work Sans',system-ui,sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  max-width:760px;
+  margin:0 auto;
+  padding:0 18px 80px;
+  line-height:1.45;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  padding:40px 0 28px;
+  text-align:center;
+  border-bottom:3px solid var(--ink);
+  margin-bottom:30px;
+}
+.bib{
+  width:84px;height:84px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  background:var(--ink);
+  color:var(--paper);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Mono',monospace;
+  font-weight:700;
+  font-size:1.6rem;
+  letter-spacing:1px;
+  border:4px solid var(--yellow);
+}
+.hero h1{
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  text-transform:uppercase;
+  font-size:clamp(2rem,7vw,3rem);
+  letter-spacing:1px;
+  margin:0 0 10px;
+  line-height:1.05;
+}
+.kicker{
+  max-width:480px;
+  margin:0 auto 22px;
+  color:var(--ink-soft);
+  font-size:0.98rem;
+}
+.nameline{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+  font-family:'Space Mono',monospace;
+  font-size:0.85rem;
+}
+.nameline label{color:var(--ink-soft);}
+.nameline input{
+  font-family:'Space Mono',monospace;
+  border:none;
+  border-bottom:2px solid var(--ink);
+  background:transparent;
+  padding:4px 2px;
+  font-size:0.95rem;
+  min-width:180px;
+  color:var(--ink);
+}
+.nameline input:focus{outline:2px solid var(--green);outline-offset:3px;}
+
+/* ---------- STAGE LAYOUT ---------- */
+.stage{
+  position:relative;
+  padding:26px 0 30px 28px;
+  border-left:3px dashed var(--line);
+  margin-left:6px;
+  opacity:0;
+  transform:translateY(14px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.stage.visible{opacity:1;transform:translateY(0);}
+.stage::before{
+  content:attr(data-km);
+  position:absolute;
+  left:-13px;
+  top:30px;
+  width:22px;height:22px;
+  border-radius:50%;
+  background:var(--paper);
+  border:3px solid var(--ink);
+  font-family:'Space Mono',monospace;
+  font-size:0;
+}
+.stagehead{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  gap:10px;
+  margin-bottom:6px;
+}
+.stagenum{
+  font-family:'Space Mono',monospace;
+  font-size:0.78rem;
+  letter-spacing:1px;
+  color:var(--ink-soft);
+}
+.stagehead h2{
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  font-size:1.35rem;
+  margin:0;
+}
+.tag{
+  font-family:'Space Mono',monospace;
+  font-size:0.68rem;
+  letter-spacing:0.5px;
+  padding:3px 8px;
+  border-radius:3px;
+  color:var(--ink);
+  font-weight:700;
+}
+.tag-yellow{background:var(--yellow);}
+.tag-green{background:var(--green);color:var(--paper);}
+.tag-red{background:var(--red);color:var(--paper);}
+
+.stagedesc{
+  color:var(--ink-soft);
+  font-size:0.92rem;
+  margin:0 0 16px;
+  max-width:560px;
+}
+
+/* ---------- REGION CARDS ---------- */
+.region-grid,.style-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+@media (max-width:520px){.region-grid,.style-grid{grid-template-columns:1fr;}}
+
+.region-card,.style-card,.radio-card{
+  --accent:#888;
+  position:relative;
+  display:block;
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:8px;
+  padding:14px 14px 12px;
+  cursor:pointer;
+  transition:border-color .15s ease, box-shadow .15s ease;
+}
+.region-card input,.style-card input,.radio-card input{
+  position:absolute;
+  top:14px;right:12px;
+  width:18px;height:18px;
+  accent-color:var(--accent);
+}
+.region-card:has(input:checked),
+.style-card:has(input:checked),
+.radio-card:has(input:checked){
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px var(--accent) inset;
+  background:var(--card);
+}
+.region-name,.style-name,.radio-name{
+  display:block;
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  font-size:1rem;
+  margin-bottom:4px;
+  padding-right:22px;
+}
+.region-line,.style-line,.radio-line{
+  display:block;
+  font-size:0.84rem;
+  color:var(--ink-soft);
+  padding-right:22px;
+}
+
+.radio-stack{display:flex;flex-direction:column;gap:10px;}
+
+/* ---------- FORM CONTROLS ---------- */
+.field{margin-bottom:14px;}
+.field label.flabel{
+  display:block;
+  font-family:'Space Mono',monospace;
+  font-size:0.78rem;
+  color:var(--ink-soft);
+  margin-bottom:5px;
+  letter-spacing:0.3px;
+}
+input[type="date"],input[type="text"],select,textarea{
+  width:100%;
+  font-family:'Work Sans',sans-serif;
+  font-size:0.95rem;
+  padding:10px 12px;
+  border:2px solid var(--line);
+  border-radius:6px;
+  background:var(--card);
+  color:var(--ink);
+}
+textarea{min-height:70px;resize:vertical;}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid var(--green);
+  outline-offset:1px;
+  border-color:var(--green);
+}
+.dates-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+@media (max-width:560px){.dates-grid{grid-template-columns:1fr;}}
+
+/* ---------- BONUS ---------- */
+details.bonus{
+  margin-top:8px;
+  border:2px dashed var(--line);
+  border-radius:8px;
+  padding:14px 16px;
+  background:var(--card);
+}
+details.bonus summary{
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  cursor:pointer;
+  font-size:1rem;
+}
+details.bonus .bonus-body{margin-top:14px;}
+.bonus-q{margin-bottom:18px;}
+.bonus-q .flabel{
+  font-family:'Work Sans',sans-serif;
+  font-weight:600;
+  color:var(--ink);
+  font-size:0.92rem;
+  margin-bottom:8px;
+}
+
+/* ---------- SUBMIT ---------- */
+.submitrow{margin-top:32px;text-align:center;}
+button{
+  font-family:'Oswald',sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:1rem;
+  padding:14px 30px;
+  border-radius:6px;
+  border:3px solid var(--ink);
+  background:var(--yellow);
+  color:var(--ink);
+  cursor:pointer;
+  transition:transform .12s ease;
+}
+button:hover{transform:translateY(-2px);}
+button:focus-visible{outline:3px solid var(--green);outline-offset:2px;}
+button.ghost{background:transparent;color:var(--ink);}
+
+/* ---------- RESULT ---------- */
+.result{
+  margin-top:36px;
+  border-top:3px solid var(--ink);
+  padding-top:26px;
+  text-align:center;
+}
+.result.hidden{display:none;}
+.result h2{
+  font-family:'Oswald',sans-serif;
+  text-transform:uppercase;
+  font-size:1.8rem;
+  margin:0 0 14px;
+}
+#resultText{
+  text-align:left;
+  font-family:'Space Mono',monospace;
+  font-size:0.84rem;
+  background:var(--card);
+  border:2px solid var(--line);
+  border-radius:8px;
+  padding:18px;
+  white-space:pre-wrap;
+  margin:0 0 18px;
+}
+.resultbtns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.copied-msg{
+  font-family:'Space Mono',monospace;
+  font-size:0.8rem;
+  color:var(--green);
+  margin-top:8px;
+  min-height:1.2em;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .stage{transition:none;opacity:1;transform:none;}
+}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="bib">030</div>
+    <h1>Die Grand Tour<br>zum 30.</h1>
+    <p class="kicker">Du wirst 30. Zeit, das mit etwas zu feiern, das mehr Muskelkater verursacht als eine normale Geburtstagsfeier: eine mehrtägige Radtour mit deinem Bruder. Anmeldung bitte vollständig ausfüllen.</p>
+    <div class="nameline">
+      <label for="riderName">Fahrer:</label>
+      <input id="riderName" type="text" placeholder="Dein Name hier">
+    </div>
+  </header>
+
+  <form id="tourForm">
+
+    <section class="stage" data-km="1">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 1</span>
+        <h2>Streckenwahl</h2>
+        <span class="tag tag-yellow">GC-Entscheidung</span>
+      </div>
+      <p class="stagedesc">Vier Regionen haben sich für die diesjährige Ausgabe qualifiziert. Du entscheidest, wo gelitten und genossen wird.</p>
+      <div class="region-grid">
+        <label class="region-card" style="--accent:#3A6EA5">
+          <input type="radio" name="region" value="Bodensee">
+          <span class="region-name">Bodensee</span>
+          <span class="region-line">Drei Länder, ein See, garantiert keine Alpenüberquerung. Weinberge mit Alpenblick als Bonus.</span>
+        </label>
+        <label class="region-card" style="--accent:#6B2D5C">
+          <input type="radio" name="region" value="Saale-Unstrut">
+          <span class="region-name">Saale-Unstrut</span>
+          <span class="region-line">Nördlichstes Weinanbaugebiet Europas. Geheimtipp, fast schon hipster – aber ohne die Hipster.</span>
+        </label>
+        <label class="region-card" style="--accent:#D4A017">
+          <input type="radio" name="region" value="Rheinhessen">
+          <span class="region-name">Rheinhessen</span>
+          <span class="region-line">Riesling-Hauptstadt, sanfte Hügel – perfekt, wenn die Beine schon beim Wort "Steigung" protestieren.</span>
+        </label>
+        <label class="region-card" style="--accent:#2F6B3A">
+          <input type="radio" name="region" value="Mosel">
+          <span class="region-name">Mosel</span>
+          <span class="region-line">Steile Lagen, scharfe Kurven, am Ziel ein Glas, das du dir redlich verdient hast.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="2">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 2</span>
+        <h2>Termine</h2>
+        <span class="tag tag-yellow">Zeitfahren</span>
+      </div>
+      <p class="stagedesc">Drei Wochenenden, eine Wahrheit: mindestens eines davon wird klappen.</p>
+      <div class="dates-grid">
+        <div class="field">
+          <label class="flabel" for="date1">1. Terminwunsch</label>
+          <input type="date" id="date1">
+        </div>
+        <div class="field">
+          <label class="flabel" for="date2">2. Terminwunsch</label>
+          <input type="date" id="date2">
+        </div>
+        <div class="field">
+          <label class="flabel" for="date3">3. Terminwunsch</label>
+          <input type="date" id="date3">
+        </div>
+      </div>
+    </section>
+
+    <section class="stage" data-km="3">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 3</span>
+        <h2>Fahrstil-Klassifizierung</h2>
+        <span class="tag tag-green">Punktewertung</span>
+      </div>
+      <p class="stagedesc">Mehrfachauswahl erlaubt – ehrlich antworten, das Tempo richtet sich danach.</p>
+      <div class="style-grid">
+        <label class="style-card" style="--accent:#F4C430">
+          <input type="checkbox" name="style" value="Sprinter">
+          <span class="style-name">Sprinter</span>
+          <span class="style-line">Vollgas, Pause ist was für andere.</span>
+        </label>
+        <label class="style-card" style="--accent:#C1422E">
+          <input type="checkbox" name="style" value="Kletterer">
+          <span class="style-name">Kletterer</span>
+          <span class="style-line">Höhenmeter sind Freunde, nicht Feinde.</span>
+        </label>
+        <label class="style-card" style="--accent:#3F7D52">
+          <input type="checkbox" name="style" value="Genießer">
+          <span class="style-name">Genießer</span>
+          <span class="style-line">Tempo egal, Aussicht alles.</span>
+        </label>
+        <label class="style-card" style="--accent:#6b6152">
+          <input type="checkbox" name="style" value="Schieber">
+          <span class="style-name">Schieber</span>
+          <span class="style-line">Ehrlich gesagt: kommt vor.</span>
+        </label>
+        <label class="style-card" style="--accent:#3A6EA5">
+          <input type="checkbox" name="style" value="Wasserträger">
+          <span class="style-name">Wasserträger</span>
+          <span class="style-line">Fährt vorne, hält den Wind ab, nimmt's nicht persönlich.</span>
+        </label>
+        <label class="style-card" style="--accent:#D4A017">
+          <input type="checkbox" name="style" value="Pausen-Connaisseur">
+          <span class="style-name">Pausen-Connaisseur</span>
+          <span class="style-line">Jedes Café ist ein Pflichthalt.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="4">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 4</span>
+        <h2>Nachtquartier</h2>
+        <span class="tag tag-red">Bergetappe</span>
+      </div>
+      <p class="stagedesc">Zelt, Hotel oder schlicht egal — Hauptsache, irgendwo liegt eine Matratze.</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#2F6B3A">
+          <input type="radio" name="lodging" value="Zelten">
+          <span class="radio-name">Zelten</span>
+          <span class="radio-line">Echtes Abenteuer, echte Rückenschmerzen am Morgen.</span>
+        </label>
+        <label class="radio-card" style="--accent:#D4A017">
+          <input type="radio" name="lodging" value="Hotel">
+          <span class="radio-name">Hotel</span>
+          <span class="radio-line">Komfort first. Heldenstatus optional.</span>
+        </label>
+        <label class="radio-card" style="--accent:#6b6152">
+          <input type="radio" name="lodging" value="Egal">
+          <span class="radio-name">Egal</span>
+          <span class="radio-line">Hauptsache es gibt eine Dusche. Oder auch nicht.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="5">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 5</span>
+        <h2>Formcheck</h2>
+        <span class="tag tag-green">Startanalyse</span>
+      </div>
+      <p class="stagedesc">Wie lange ist deine letzte große Radtour her?</p>
+      <div class="field">
+        <select id="lastTour">
+          <option value="">— Auswählen —</option>
+          <option>Erst letzte Woche</option>
+          <option>Dieses Jahr schon mal</option>
+          <option>Vor 1–3 Jahren, glaube ich</option>
+          <option>Ich erinnere mich nur noch an Schmerzen</option>
+          <option>War das vor oder nach Corona?</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="stage" data-km="6">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 6</span>
+        <h2>Herkunftsnachweis</h2>
+        <span class="tag tag-yellow">Archivrecherche</span>
+      </div>
+      <p class="stagedesc">Marke deines ersten Fahrrads. Lügen wird im Zielinterview aufgedeckt.</p>
+      <div class="field">
+        <input type="text" id="firstBike" placeholder="z.B. Puky, BMX vom Flohmarkt, Eigenbau...">
+      </div>
+    </section>
+
+    <section class="stage" data-km="7">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 7</span>
+        <h2>Sicherheitsreglement</h2>
+        <span class="tag tag-red">Kommissar-Check</span>
+      </div>
+      <p class="stagedesc">Helm oder ohne — die Renndirektion möchte das vorab wissen.</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#3F7D52">
+          <input type="radio" name="helmet" value="Immer. Mama hat's eingebläut.">
+          <span class="radio-name">Immer</span>
+          <span class="radio-line">Mama hat's mir eingebläut.</span>
+        </label>
+        <label class="radio-card" style="--accent:#D4A017">
+          <input type="radio" name="helmet" value="Meistens, außer keiner schaut hin.">
+          <span class="radio-name">Meistens</span>
+          <span class="radio-line">Außer keiner schaut hin.</span>
+        </label>
+        <label class="radio-card" style="--accent:#C1422E">
+          <input type="radio" name="helmet" value="Ohne, Wind in den Haaren ist Pflicht.">
+          <span class="radio-name">Ohne</span>
+          <span class="radio-line">Wind in den Haaren ist Pflicht.</span>
+        </label>
+        <label class="radio-card" style="--accent:#6b6152">
+          <input type="radio" name="helmet" value="Kommt drauf an, ob fotografiert wird.">
+          <span class="radio-name">Kommt drauf an</span>
+          <span class="radio-line">Ob fotografiert wird.</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="8">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 8</span>
+        <h2>Verpflegungszone</h2>
+        <span class="tag tag-yellow">Ravitaillement</span>
+      </div>
+      <p class="stagedesc">Verdiente Belohnung am Etappenziel — keine Tour ohne Ziel-Snack.</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#D4A017"><input type="radio" name="reward" value="Bier"><span class="radio-name">Bier</span></label>
+        <label class="radio-card" style="--accent:#6B2D5C"><input type="radio" name="reward" value="Wein"><span class="radio-name">Wein</span></label>
+        <label class="radio-card" style="--accent:#3A6EA5"><input type="radio" name="reward" value="Eis"><span class="radio-name">Eis</span></label>
+        <label class="radio-card" style="--accent:#C1422E"><input type="radio" name="reward" value="Currywurst"><span class="radio-name">Currywurst</span></label>
+        <label class="radio-card" style="--accent:#6b6152"><input type="radio" name="reward" value="Alles, was Kalorien hat"><span class="radio-name">Alles, was Kalorien hat</span></label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="9">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 9</span>
+        <h2>Material-Check</h2>
+        <span class="tag tag-red">Technische Abnahme</span>
+      </div>
+      <p class="stagedesc">Pannenkompetenz: Schon mal selbst einen Schlauch gewechselt?</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#3F7D52"><input type="radio" name="flat" value="Ja, Profi"><span class="radio-name">Ja, Profi</span></label>
+        <label class="radio-card" style="--accent:#D4A017"><input type="radio" name="flat" value="Theoretisch ja"><span class="radio-name">Theoretisch ja</span></label>
+        <label class="radio-card" style="--accent:#C1422E"><input type="radio" name="flat" value="Was ist ein Schlauch?"><span class="radio-name">Was ist ein Schlauch?</span></label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="10">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 10</span>
+        <h2>Tagesplanung</h2>
+        <span class="tag tag-green">Briefing</span>
+      </div>
+      <p class="stagedesc">Tagesstart — wie wird angegriffen?</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#F4C430"><input type="radio" name="daystart" value="Sonnenaufgang, volle Kraft"><span class="radio-name">Sonnenaufgang, volle Kraft</span></label>
+        <label class="radio-card" style="--accent:#6b6152"><input type="radio" name="daystart" value="Erst Kaffee, dann Leben"><span class="radio-name">Erst Kaffee, dann Leben</span></label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="11">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 11</span>
+        <h2>Antriebsfrage</h2>
+        <span class="tag tag-yellow">Reglement</span>
+      </div>
+      <p class="stagedesc">E-Bike oder eigene Beinkraft?</p>
+      <div class="radio-stack">
+        <label class="radio-card" style="--accent:#3F7D52"><input type="radio" name="ebike" value="Klassisch, ohne Strom"><span class="radio-name">Klassisch, ohne Strom</span></label>
+        <label class="radio-card" style="--accent:#3A6EA5"><input type="radio" name="ebike" value="E-Bike, kein Schamgefühl"><span class="radio-name">E-Bike, kein Schamgefühl</span></label>
+        <label class="radio-card" style="--accent:#C1422E"><input type="radio" name="ebike" value="Nur wenn du auch eins nimmst"><span class="radio-name">Nur wenn du auch eins nimmst</span></label>
+      </div>
+    </section>
+
+    <section class="stage" data-km="12">
+      <div class="stagehead">
+        <span class="stagenum">ETAPPE 12</span>
+        <h2>Pressekonferenz</h2>
+        <span class="tag tag-red">Letztes Wort</span>
+      </div>
+      <p class="stagedesc">Gepäck-Veto und letzte Statements vor dem Start.</p>
+      <div class="field">
+        <label class="flabel" for="packlist">Packlisten-Veto: Was darf auf keinen Fall fehlen?</label>
+        <input type="text" id="packlist" placeholder="Dein unverzichtbares Gepäckstück">
+      </div>
+      <div class="field">
+        <label class="flabel" for="freitext">Sonstige Wünsche, Forderungen oder Erpressungsversuche</label>
+        <textarea id="freitext" placeholder="Hier ist Platz für alles Weitere..."></textarea>
+      </div>
+    </section>
+
+    <div class="submitrow">
+      <button type="submit">Ins Ziel rollen</button>
+    </div>
+  </form>
+
+  <div class="result hidden" id="result">
+    <h2>Zielankunft 🏁</h2>
+    <pre id="resultText"></pre>
+    <div class="resultbtns">
+      <button type="button" id="copyBtn">Antwort kopieren</button>
+      <button type="button" class="ghost" id="editBtn">Zurück zur Strecke</button>
+    </div>
+    <div class="copied-msg" id="copiedMsg"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // scroll-reveal for stages
+  var stages = document.querySelectorAll('.stage');
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('visible'); }
+    });
+  }, {threshold:0.15});
+  stages.forEach(function(s){ obs.observe(s); });
+
+  function val(id){ var el = document.getElementById(id); return el ? el.value.trim() : ''; }
+  function checkedRadio(name){
+    var el = document.querySelector('input[name="'+name+'"]:checked');
+    return el ? el.value : '—';
+  }
+  function checkedBoxes(name){
+    var els = document.querySelectorAll('input[name="'+name+'"]:checked');
+    if(!els.length) return '—';
+    return Array.prototype.map.call(els, function(e){ return e.value; }).join(', ');
+  }
+  function fmtDate(v){
+    if(!v) return '—';
+    var p = v.split('-');
+    if(p.length===3) return p[2]+'.'+p[1]+'.'+p[0];
+    return v;
+  }
+
+  var form = document.getElementById('tourForm');
+  var result = document.getElementById('result');
+  var resultText = document.getElementById('resultText');
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = val('riderName') || '(Name fehlt)';
+    var lines = [];
+    lines.push('GRAND TOUR ZUM 30. — ANMELDUNG');
+    lines.push('Fahrer: ' + name);
+    lines.push('');
+    lines.push('Region: ' + checkedRadio('region'));
+    lines.push('Terminwünsche: ' + fmtDate(val('date1')) + '  /  ' + fmtDate(val('date2')) + '  /  ' + fmtDate(val('date3')));
+    lines.push('Fahrstil: ' + checkedBoxes('style'));
+    lines.push('Nachtquartier: ' + checkedRadio('lodging'));
+    lines.push('Letzte große Tour: ' + (val('lastTour') || '—'));
+    lines.push('Erstes Fahrrad: ' + (val('firstBike') || '—'));
+    lines.push('Helm: ' + checkedRadio('helmet'));
+    lines.push('');
+    lines.push('— Bonus —');
+    lines.push('Belohnung: ' + checkedRadio('reward'));
+    lines.push('Pannenkompetenz: ' + checkedRadio('flat'));
+    lines.push('Tagesstart: ' + checkedRadio('daystart'));
+    lines.push('E-Bike: ' + checkedRadio('ebike'));
+    lines.push('Packlisten-Veto: ' + (val('packlist') || '—'));
+    lines.push('Sonstiges: ' + (val('freitext') || '—'));
+
+    resultText.textContent = lines.join('\n');
+    form.style.display = 'none';
+    result.classList.remove('hidden');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  document.getElementById('editBtn').addEventListener('click', function(){
+    result.classList.add('hidden');
+    form.style.display = '';
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function(){
+    var text = resultText.textContent;
+    var msg = document.getElementById('copiedMsg');
+    function ok(){ msg.textContent = 'Kopiert — fertig zum Versenden!'; setTimeout(function(){msg.textContent='';}, 2500); }
+    function fail(){ msg.textContent = 'Kopieren hat nicht geklappt — bitte Text manuell markieren.'; }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(ok).catch(fail);
+    } else {
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        ok();
+      }catch(e){ fail(); }
+    }
+  });
+})();
+</script>
