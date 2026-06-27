@@ -19,6 +19,7 @@
 }
 
 *{box-sizing:border-box;}
+html,body{max-width:100%;overflow-x:hidden;}
 body,div,section,header,form,fieldset{margin:0;padding:0;}
 
 .wrap{
@@ -26,6 +27,7 @@ body,div,section,header,form,fieldset{margin:0;padding:0;}
   background:var(--paper);
   color:var(--ink);
   max-width:760px;
+  width:100%;
   margin:0 auto;
   padding:0 18px 80px;
   line-height:1.45;
@@ -154,15 +156,17 @@ body,div,section,header,form,fieldset{margin:0;padding:0;}
 /* ---------- REGION CARDS ---------- */
 .region-grid,.style-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
   gap:10px;
 }
-@media (max-width:520px){.region-grid,.style-grid{grid-template-columns:1fr;}}
+@media (max-width:520px){.region-grid,.style-grid{grid-template-columns:minmax(0,1fr);}}
 
 .region-card,.style-card,.radio-card{
   --accent:#888;
   position:relative;
   display:block;
+  min-width:0;
+  max-width:100%;
   background:var(--card);
   border:2px solid var(--line);
   border-radius:8px;
@@ -191,15 +195,18 @@ body,div,section,header,form,fieldset{margin:0;padding:0;}
   font-size:1rem;
   margin-bottom:4px;
   padding-right:22px;
+  word-break:break-word;
 }
 .region-line,.style-line,.radio-line{
   display:block;
   font-size:0.84rem;
   color:var(--ink-soft);
   padding-right:22px;
+  word-break:break-word;
 }
 
 .radio-stack{display:flex;flex-direction:column;gap:10px;}
+.radio-stack > *{min-width:0;}
 
 /* ---------- FORM CONTROLS ---------- */
 .field{margin-bottom:14px;}
@@ -213,6 +220,8 @@ body,div,section,header,form,fieldset{margin:0;padding:0;}
 }
 input[type="date"],input[type="text"],select,textarea{
   width:100%;
+  max-width:100%;
+  min-width:0;
   font-family:'Work Sans',sans-serif;
   font-size:0.95rem;
   padding:10px 12px;
@@ -221,6 +230,11 @@ input[type="date"],input[type="text"],select,textarea{
   background:var(--card);
   color:var(--ink);
 }
+input[type="date"]{
+  -webkit-min-logical-width:100%;
+  appearance:none;
+  -webkit-appearance:none;
+}
 textarea{min-height:70px;resize:vertical;}
 input:focus,select:focus,textarea:focus{
   outline:2px solid var(--green);
@@ -228,6 +242,7 @@ input:focus,select:focus,textarea:focus{
   border-color:var(--green);
 }
 .dates-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.dates-grid > .field{min-width:0;}
 @media (max-width:560px){.dates-grid{grid-template-columns:1fr;}}
 
 /* ---------- BONUS ---------- */
